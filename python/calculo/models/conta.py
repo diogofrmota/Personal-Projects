@@ -82,4 +82,4 @@ class Conta:
         return certo
 
     def _mostrar_operacao(self: object) -> None:
-        pass
+        print(f'{self.valor1} {self._op_simbolo} {self.valor2} = ?')
