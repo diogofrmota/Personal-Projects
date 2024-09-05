@@ -108,7 +108,7 @@ def comprar_produto() -> None:
                     menu()
             else:
                 item = {produto: 1}
-                carrinho.append{item}
+                carrinho.append(item)
                 print(f'O produto {produto.nome} foi adicionado ao carrinho')
                 sleep(2)
                 menu()
@@ -151,7 +151,7 @@ def pega_produto_por_codigo(codigo: int) -> Produto:
     p: Produto = None
 
     for produto in produtos:
-        if produto.codigo == codigo
+        if produto.codigo == codigo:
             p = produto
     return p
 
