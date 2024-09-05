@@ -34,7 +34,7 @@ class Conta:
         if self.operacao == 1:
             op = 'Somar'
         elif self.operacao == 2:
-            op = "Diminuir"
+            op = "Subtrair"
         elif self.operacao == 3:
             op = 'Multiplicar'
         else:
@@ -43,14 +43,43 @@ class Conta:
     
     @property
     def _gerar_valor(self: object) -> int:
-        pass
+        if self.dificuldade == 1:
+            return randint(0, 10)
+        elif self.dificuldade == 2:
+            return randint(0, 100)
+        elif self.dificuldade == 3:
+            return randint(0, 1000)
+        elif self.dificuldade == 4:
+            return randint(0, 10000)
 
     @property
     def _gerar_resultado(self: object) -> int:
-        pass
+        if self.operacao == 1: #somar
+            return self.valor1 + self.valor2
+        elif self.operacao == 2: #subtrair
+            return self.valor1 - self.valor2
+        else:
+            return self.valor1 * self.valor2 # multiplicar
+
+    @property
+    def _op_simbolo(self: object) -> str:
+        if self.operacao == 1:
+            return '+'
+        elif self.operacao == 2:
+            return '-'
+        else:
+            return '*'
 
     def checar_resultado(self: object, resposta: int) -> bool:
-        pass
+        certo: bool = False
+
+        if self.resultado == resposta:
+            print('Resposta correta!')
+            certo = True
+        else:
+            print('Resposta errada!')
+        print(f'{self.valor1} {self._op_simbolo} {self.valor2} = {self.resultado}')
+        return certo
 
     def _mostrar_operacao(self: object) -> None:
         pass

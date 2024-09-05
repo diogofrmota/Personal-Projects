@@ -1,5 +1,5 @@
 from models.conta import Conta
 
-calc: Conta = Conta(dificuldade = 1)
+calc: Conta = Conta(1)
 
 print(calc)
