@@ -2,7 +2,7 @@ from random import randint
 
 class Conta:
 
-    def __init__(self: object, dificuldade: int) -> None:
+    def __init__(self: object, dificuldade: int, /) -> None:
         self.__dificuldade: int = dificuldade
         self.__valor1: int = self._gerar_valor
         self.__valor2: int = self._gerar_valor
