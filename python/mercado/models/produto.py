@@ -7,6 +7,7 @@ class Produto:
         self.__codigo: int = Produto.contador
         self.__nome: str = nome
         self.__preco: float = preco
+        Produto.contador += 1
 
     @property
     def codigo(self: object) -> int:

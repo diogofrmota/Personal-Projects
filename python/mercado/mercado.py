@@ -126,7 +126,7 @@ def visualizar_carrinho() -> None:
         print('Produtos no carrinho: ')
 
         for item in carrinho:
-            for dados in item.itens():
+            for dados in item.items():
                 print(dados[0])
                 print(f'Quantidade: {dados[1]}')
                 print('====================')
