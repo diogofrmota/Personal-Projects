@@ -42,3 +42,7 @@ def data_nascimento(self: object) -> str:
 @property
 def data_cadastro(self: object) -> str:
     return date_para_str(self.__data_cadastro)
+
+
+def __str__(self: object) -> str:
+    return f'Código: {self.codigo} \Nome: {self.nome} \nData de Nascimento: {self.data_nascimento} \nCadastro: {self.data_cadastro}'
