@@ -49,7 +49,7 @@ class Conta:
         return self.__saldo_total
     
     @property
-    def _calcula_saldo_total(self: object) -> floar:
+    def _calcula_saldo_total(self: object) -> float:
         return self.saldo + self.limite
     
 
