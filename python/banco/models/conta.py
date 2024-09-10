@@ -10,7 +10,7 @@ class Conta:
         self.__cliente: Cliente = cliente
         self.__saldo: float = 0.0
         self.__limite: float = 100.0
-        self.__saldo_total: float = self.__calcula_saldo_total
+        self.__saldo_total: float = self._calcula_saldo_total
         Conta.codigo += 1
 
 
