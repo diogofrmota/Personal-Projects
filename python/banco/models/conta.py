@@ -31,11 +31,34 @@ class Conta:
     def saldo(self: object) -> float:
         return self.__saldo
     
+    @saldo.setter
+    def saldo(self: object, valor: float) -> None:
+        self.__saldo = valor
+
     @property
     def limite(self: object) -> float:
         return self.__limite
+    
+    @limite.setter
+    def limite(self: object, valor: float) -> None:
+        self.__limite = valor
     
 
     @property
     def saldo_total(self: object) -> float:
         return self.__saldo_total
+    
+    @property
+    def _calcula_saldo_total(self: object) -> floar:
+        return self.saldo + self.limite
+    
+
+    def depositar(self: object, valor: float) -> None:
+        pass
+
+
+    def sacar(self: object, valor: float) -> None:
+        pass
+
+    def transferir(self: object, destino: object, valor: float) -> None:
+        pass
