@@ -13,7 +13,40 @@ def main() -> None:
 
 
 def menu() -> None:
-    pass
+    print('=====================================================')
+    print('======================= ATM =========================')
+    print('=================== Diogos Bank =====================')
+    print('=====================================================')
+
+    print('Selecione uma opção no menu: ')
+    print('1 - Criar conta')
+    print('2 - Efetuar saque')
+    print('3 - Efetuar depósito')
+    print('4 - Efetuar transferência')
+    print('5 - Listar contas')
+    print('6 - Sair do sistema')
+
+
+    opcao: int = int(input())
+
+    if opcao == 1:
+        criar_conta()
+    elif opcao == 2:
+        efetuar_saque()
+    elif opcao == 3:
+        efetuar_deposito
+    elif opcao == 4:
+        efetuar_transferencia
+    elif opcao == 5:
+        listar_contas
+    elif opcao == 6:
+        print('Volte sempre')
+        sleep(2)
+        exit(0)
+    else:
+        print('Opção inválida')
+        sleep(2)
+        menu()
 
 
 def criar_conta() -> None:
