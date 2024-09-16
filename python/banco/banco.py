@@ -108,7 +108,28 @@ def efetuar_deposito() -> None:
 
 
 def efetuar_transferencia() -> None:
-    pass
+    if len(contas) > 0:
+        nuemro_o: int = int(input('Informe o número da sua conta: '))
+
+        conta_o: Conta = buscar_conta_por_numero
+
+        if conta_o:
+            numero_d: int = int(input('Informe o número da conta destino.'))
+
+            conta_d: Conta = buscar_conta_por_numero(numero_d)
+
+            if conta_d:
+                valor: float = float(input('Informe o valor da transferência: '))
+
+                conta_o.transferir(conta_d, valor)
+            else:
+                print(f'A conta destino com o número {numero_d} não foi encontrada. ')
+        else:
+            print(f'A sua conta com o númro {conta_0} não foi encontrada.')
+    else:
+        print('Ainda não existem contas cadastradas.')
+        sleep(2)
+        menu()
 
 
 def listar_contas() -> None:
