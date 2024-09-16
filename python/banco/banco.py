@@ -50,7 +50,25 @@ def menu() -> None:
 
 
 def criar_conta() -> None:
-    pass
+    print('Informe os dados do cliente: ')
+
+    nome: str = input('Nome do cliente: ')
+    email: str = input('E-mail do cliente: ')
+    cpf: str = input('CPF do cliente')
+    data_nascimento: str = input('Data de nascimento do cliente: ')
+
+    cliente: Cliente = Cliente(nome, email, cpf, data_nascimento)
+
+    conta: Conta = Conta(cliente)
+    
+    contas.append(conta)
+
+    print('Conta criada com sucesso.')
+    print('Dados da conta: ')
+    print('=====================================================')
+    print(conta)
+    sleep(2)
+    menu()
 
 
 def efetuar_saque() -> None:
