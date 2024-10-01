@@ -81,4 +81,19 @@ class Conta:
             print('Saque não realizado. Tente novamente')
 
     def transferir(self: object, destino: object, valor: float) -> None:
-        pass
+        if valor > 0 and self.saldo_total >= valor:
+            if self.saldo >= valor:
+                self.saldo = self.saldo - valor
+                self.saldo_total = self._calcula_saldo_total
+                destino.saldo= destino.saldo + valor
+                destino.saldo_total = destino._calcula_saldo_total
+            else:
+                restante: float = self.saldo - valor
+                self.saldo = 0
+                self.limite = self.limite + restante
+                self.saldo_total = self._calcula_saldo_total
+                destino.saldo = destino.saldo + valor
+                destino.saldo_total = destino.calcula_saldo_total
+            print('Transferência realizada com sucesso.')
+        else:
+            print('Transferência não realizada. Tente novamente.')
