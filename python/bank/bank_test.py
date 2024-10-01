@@ -1,15 +1,11 @@
-from models.cliente import Cliente
-from models.conta import Conta
+from models.client import Client
+from models.account import Account
 
-felicity: Cliente = Cliente('Felicity Jones', 'felicity@gmail.com', '123.456.789-01', '02/09/1987')
+felicity: Client = Client('Felicity Jones', 'felicity@gmail.com', '123.456.789-01', '02/09/1987')
+angelina: Client = Client('Angelina Jolie', 'angelinay@gmail.com', '234.567.890-02', '08/07/1978')
 
-angelina: Cliente = Cliente('Angelina Jolie', 'angelinay@gmail.com', '234.567.890-02', '08/07/1978')
+account_f: Account = Account(felicity)
+account_a: Account = Account(angelina)
 
-# print(felicity)
-# print(angelina)
-
-contaf: Conta = Conta(felicity)
-contaa: Conta = Conta(angelina)
-
-print(contaf)
-print(contaa)
+print(account_f)
+print(account_a)
