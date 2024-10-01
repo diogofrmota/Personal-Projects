@@ -1,99 +1,69 @@
-from models.cliente import Cliente
-from utils.helper import formata_float_str_moeda
+from models.client import Client
+from utils.helper import format_float_to_currency
 
-class Conta:
+class Account:
 
-    codigo: int = 1001
+    code_counter: int = 1001
 
-    def __init__(self: object, cliente: Cliente) -> None:
-        self.__numero: int = Conta.codigo
-        self.__cliente: Cliente = cliente
-        self.__saldo: float = 0.0
-        self.__limite: float = 100.0
-        self.__saldo_total: float = self._calcula_saldo_total
-        Conta.codigo += 1
-
-
-    def __str__(self: object) -> str:
-        return f'Número da conta: {self.numero} \nCliente: {self.cliente.nome} \nSaldo Total: {formata_float_str_moeda(self.saldo_total)}'
-    
+    def __init__(self, client: Client) -> None:
+        self.__number: int = Account.code_counter
+        self.__client: Client = client
+        self.__balance: float = 0.0
+        self.__limit: float = 100.0
+        self.__total_balance: float = self.calculate_total_balance()
+        Account.code_counter += 1
 
     @property
-    def numero(self: object) -> int:
-        return self.__numero
-    
+    def number(self) -> int:
+        return self.__number
 
     @property
-    def cliente(self: object) -> Cliente:
-        return self.__cliente
-    
-    @property
-    def saldo(self: object) -> float:
-        return self.__saldo
-    
-    @saldo.setter
-    def saldo(self: object, valor: float) -> None:
-        self.__saldo = valor
+    def client(self) -> Client:
+        return self.__client
 
     @property
-    def limite(self: object) -> float:
-        return self.__limite
-    
-    @limite.setter
-    def limite(self: object, valor: float) -> None:
-        self.__limite = valor
-    
+    def balance(self) -> float:
+        return self.__balance
+
+    def calculate_total_balance(self) -> float:
+        return self.__balance + self.__limit
 
     @property
-    def saldo_total(self: object) -> float:
-        return self.__saldo_total
-    
-    @saldo_total.setter
-    def saldo_total(self: object, valor: float) -> None:
-        self.__saldo_total = valor
-    
-    @property
-    def _calcula_saldo_total(self: object) -> float:
-        return self.saldo + self.limite
-    
+    def total_balance(self) -> float:
+        return self.calculate_total_balance()
 
-    def depositar(self: object, valor: float) -> None:
-        if valor > 0:
-            self.saldo = self.saldo + valor
-            self.saldo_total = self._calcula_saldo_total
-            print('Deposito efetuado com sucesso!')
+    @balance.setter
+    def balance(self, amount: float) -> None:
+        self.__balance = amount
+
+    def deposit(self, amount: float) -> None:
+        if amount > 0:
+            self.balance += amount
+            print('Deposit made successfully!')
         else:
-            print('Erro ao efetuar depósito. Tente novamente.')
+            print('Error making the deposit. Please try again.')
 
-
-    def sacar(self: object, valor: float) -> None:
-        if valor > 0 and self.saldo_total >= valor:
-            if self.saldo >= valor:
-                self.saldo = self.saldo - valor
-                self.saldo_total = self._calcula_saldo_total
+    def withdraw(self, amount: float) -> None:
+        if amount > 0 and self.total_balance >= amount:
+            if self.__balance >= amount:
+                self.balance -= amount
             else:
-                restante: float = self.saldo - valor
-                self.limite = self.limite + restante
-                self.saldo = 0
-                self.saldo_total = self._calcula_saldo_total
-                print('Saque efetuado com sucesso')
+                rest: float = self.__balance - amount
+                self.balance = 0
+                self.__limit += rest
+            print('Withdrawal made successfully!')
         else:
-            print('Saque não realizado. Tente novamente')
+            print('Not enough balance. Please try again.')
 
-    def transferir(self: object, destino: object, valor: float) -> None:
-        if valor > 0 and self.saldo_total >= valor:
-            if self.saldo >= valor:
-                self.saldo = self.saldo - valor
-                self.saldo_total = self._calcula_saldo_total
-                destino.saldo= destino.saldo + valor
-                destino.saldo_total = destino._calcula_saldo_total
-            else:
-                restante: float = self.saldo - valor
-                self.saldo = 0
-                self.limite = self.limite + restante
-                self.saldo_total = self._calcula_saldo_total
-                destino.saldo = destino.saldo + valor
-                destino.saldo_total = destino.calcula_saldo_total
-            print('Transferência realizada com sucesso.')
+    def transfer(self, destination, amount: float) -> None:
+        if amount > 0 and self.total_balance >= amount:
+            self.withdraw(amount)
+            destination.deposit(amount)
+            print('Transfer made successfully!')
         else:
-            print('Transferência não realizada. Tente novamente.')
+            print('Not enough balance to make the transfer. Please try again.')
+
+    def __str__(self) -> str:
+        return (f'Account Number: {self.number} \n'
+                f'Client: {self.client.name} \n'
+                f'Total Balance: {format_float_to_currency(self.total_balance)}')
