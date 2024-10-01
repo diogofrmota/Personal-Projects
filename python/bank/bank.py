@@ -1,11 +1,11 @@
 from typing import List
 from time import sleep
 
-from models.cliente import Cliente
-from models.conta import Conta
+from models.client import Client
+from models.account import Account
 
 
-contas: List[Conta] = []
+accounts: List[Account] = []
 
 
 def main() -> None:
@@ -14,145 +14,143 @@ def main() -> None:
 
 def menu() -> None:
     print('=====================================================')
-    print('======================= ATM =========================')
-    print('=================== Diogos Bank =====================')
+    print('=================== ATM SYSTEM ======================')
+    print('================= Diogo’s Bank ======================')
     print('=====================================================')
 
-    print('Selecione uma opção no menu: ')
-    print('1 - Criar conta')
-    print('2 - Efetuar saque')
-    print('3 - Efetuar depósito')
-    print('4 - Efetuar transferência')
-    print('5 - Listar contas')
-    print('6 - Sair do sistema')
+    print('Select an option from the menu: ')
+    print('1 - Create account')
+    print('2 - Make withdrawal')
+    print('3 - Make deposit')
+    print('4 - Make transfer')
+    print('5 - List accounts')
+    print('6 - Exit system')
 
+    option: int = int(input())
 
-    opcao: int = int(input())
-
-    if opcao == 1:
-        criar_conta()
-    elif opcao == 2:
-        efetuar_saque()
-    elif opcao == 3:
-        efetuar_deposito
-    elif opcao == 4:
-        efetuar_transferencia
-    elif opcao == 5:
-        listar_contas
-    elif opcao == 6:
-        print('Volte sempre')
+    if option == 1:
+        create_account()
+    elif option == 2:
+        make_withdrawal()
+    elif option == 3:
+        make_deposit()
+    elif option == 4:
+        make_transfer()
+    elif option == 5:
+        list_accounts()
+    elif option == 6:
+        print('Thank you for visiting.')
         sleep(2)
         exit(0)
     else:
-        print('Opção inválida')
+        print('Invalid option')
         sleep(2)
         menu()
 
 
-def criar_conta() -> None:
-    print('Informe os dados do cliente: ')
+def create_account() -> None:
+    print('Please enter the client details: ')
 
-    nome: str = input('Nome do cliente: ')
-    email: str = input('E-mail do cliente: ')
-    cpf: str = input('CPF do cliente')
-    data_nascimento: str = input('Data de nascimento do cliente: ')
+    name: str = input('Client name: ')
+    email: str = input('Client email: ')
+    cpf: str = input('Client CPF: ')
+    date_of_birth: str = input('Client date of birth: ')
 
-    cliente: Cliente = Cliente(nome, email, cpf, data_nascimento)
+    client: Client = Client(name, email, cpf, date_of_birth)
 
-    conta: Conta = Conta(cliente)
-    
-    contas.append(conta)
+    account: Account = Account(client)
 
-    print('Conta criada com sucesso.')
-    print('Dados da conta: ')
+    accounts.append(account)
+
+    print('Account created successfully.')
+    print('Account details: ')
     print('=====================================================')
-    print(conta)
+    print(account)
     sleep(2)
     menu()
 
 
-def efetuar_saque() -> None:
-    if len(contas) > 0:
-        numero: int = int(input('Informe o número da sua conta: '))
+def make_withdrawal() -> None:
+    if len(accounts) > 0:
+        number: int = int(input('Enter your account number: '))
 
-        conta: Conta = buscar_conta_por_numero(numero)
+        account: Account = find_account_by_number(number)
 
-        if conta:
-            valor: float = float(input('Informe o valor do saque: '))
+        if account:
+            value: float = float(input('Enter the withdrawal amount: '))
 
-            conta.sacar(valor)
+            account.withdraw(value)
         else:
-            print(f'Não foi encontrada a conta com número {numero}')
+            print(f'No account found with number {number}')
     else:
-        print('Ainda não existem contas cadastradas.')
+        print('No accounts registered.')
     sleep(2)
     menu()
 
 
-def efetuar_deposito() -> None:
-    if len(contas) > 0:
-        numero: int = int(input('Informe o número da sua conta: '))
+def make_deposit() -> None:
+    if len(accounts) > 0:
+        number: int = int(input('Enter your account number: '))
 
-        conta: Conta = buscar_conta_por_numero(numero)
+        account: Account = find_account_by_number(number)
 
-        if conta:
-            valor: float = float(input('Informe o valor do depósito: '))
+        if account:
+            value: float = float(input('Enter the deposit amount: '))
 
-            conta.depositar(valor)
+            account.deposit(value)
         else:
-            print(f'Não foi encontrada uma conta com número {numero}')
+            print(f'No account found with number {number}')
     else:
-        print('Ainda não existem contas cadastradas. ')
+        print('No accounts registered.')
     sleep(2)
     menu()
 
 
-def efetuar_transferencia() -> None:
-    if len(contas) > 0:
-        numero_o: int = int(input('Informe o número da sua conta: '))
+def make_transfer() -> None:
+    if len(accounts) > 0:
+        number_origin: int = int(input('Enter your account number: '))
 
-        conta_o: Conta = buscar_conta_por_numero
+        account_origin: Account = find_account_by_number(number_origin)
 
-        if conta_o:
-            numero_d: int = int(input('Informe o número da conta destino.'))
+        if account_origin:
+            number_destiny: int = int(input('Enter the destination account number: '))
+            
+            account_destiny: Account = find_account_by_number(number_destiny)
 
-            conta_d: Conta = buscar_conta_por_numero(numero_d)
+            if account_destiny:
+                value: float = float(input('Enter the transfer amount: '))
 
-            if conta_d:
-                valor: float = float(input('Informe o valor da transferência: '))
-
-                conta_o.transferir(conta_d, valor)
+                account_origin.transfer(account_destiny, value)
             else:
-                print(f'A conta destino com o número {numero_d} não foi encontrada. ')
+                print(f'Destination account {number_destiny} not found.')
         else:
-            print(f'A sua conta com o númro {conta_0} não foi encontrada.')
+            print(f'Your account with number {number_origin} not found.')
     else:
-        print('Ainda não existem contas cadastradas.')
-        sleep(2)
-        menu()
+        print('No accounts registered.')
+    sleep(2)
+    menu()
 
 
-def listar_contas() -> None:
-    if len(contas) > 0:
-        print('Listagem de contas')
-        for conta in contas:
-            print(conta)
+def list_accounts() -> None:
+    if len(accounts) > 0:
+        print('Listing of accounts')
+        
+        for acc in accounts:
+            print(acc)
             print('=====================================================')
             sleep(1)
     else:
-        print('Não existem contas cadastradas.')
-        sleep(2)
-        menu()
+        print('No accounts registered.')
+    sleep(2)
+    menu()
 
 
-def buscar_conta_por_numero(numero: int) -> Conta:
-    c: Conta = None
+def find_account_by_number(number: int) -> Account:
+    for acc in accounts:
+        if acc.number == number:
+            return acc
+    return None
 
-    if len(contas) > 0:
-        for conta in contas:
-            if conta.numero == numero:
-                c = conta
-    return c
 
 if __name__ == '__main__':
     main()
