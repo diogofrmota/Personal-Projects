@@ -1,17 +1,24 @@
+from typing import Union
 from datetime import date
 from utils.helper import date_to_str, str_to_date
 
 class Client:
     counter: int = 101
 
-    def __init__(self, name: str, email: str, cpf: str, date_of_birth: str) -> None:
+    def __init__(self, name: str, email: str, cpf: str, date_of_birth: Union[str, date]) -> None:
         self.__code: int = Client.counter
         self.__name: str = name
         self.__email: str = email
         self.__cpf: str = cpf
-        self.__date_of_birth: date = str_to_date(date_of_birth)
+        self.__date_of_birth: date = self.format_date(date_of_birth)
         self.__registration_date: date = date.today()
         Client.counter += 1
+
+    @staticmethod
+    def format_date(date_to_format: Union[str, date]) -> date:
+        if isinstance(date_to_format, str):
+            return str_to_date(date_to_format)
+        return date_to_format
 
     @property
     def code(self) -> int:
