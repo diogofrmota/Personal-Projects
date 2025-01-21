@@ -1,16 +1,30 @@
 from typing import List
 from time import sleep
+import re
 
 from models.client import Client
 from models.account import Account
 
-
 accounts: List[Account] = []
 
-
 def main() -> None:
-    menu()
+    while True:
+        menu()
 
+def validate_email(email: str) -> bool:
+    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return True
+    else:
+        return False
+
+def validate_birth_date(date_of_birth: str) -> bool:
+    try:
+        day, month, year = map(int, date_of_birth.split('-'))
+        if day <= 31 and month <= 12 and len(str(year))==4:
+            return True
+    except:
+        return False
+    return False
 
 def menu() -> None:
     print('=====================================================')
@@ -45,16 +59,22 @@ def menu() -> None:
     else:
         print('Invalid option')
         sleep(2)
-        menu()
-
 
 def create_account() -> None:
     print('Please enter the client details: ')
 
     name: str = input('Client name: ')
     email: str = input('Client email: ')
+    while not validate_email(email):
+        print("Invalid email. Try again.")
+        email = input('Client email: ')
+  
     cpf: str = input('Client CPF: ')
+  
     date_of_birth: str = input('Client date of birth: ')
+    while not validate_birth_date(date_of_birth):
+        print("Invalid Date of Birth. Try again.")
+        date_of_birth = input('Client date of birth: ')
 
     client: Client = Client(name, email, cpf, date_of_birth)
 
@@ -67,14 +87,15 @@ def create_account() -> None:
     print('=====================================================')
     print(account)
     sleep(2)
-    menu()
-
 
 def make_withdrawal() -> None:
     if len(accounts) > 0:
-        number: int = int(input('Enter your account number: '))
+        number: str = input('Enter your account number: ')
+        while not number.isdigit():
+            print("Invalid account number. Try again.")
+            number = input('Enter your account number: ')
 
-        account: Account = find_account_by_number(number)
+        account: Account = find_account_by_number(int(number))
 
         if account:
             value: float = float(input('Enter the withdrawal amount: '))
@@ -85,14 +106,15 @@ def make_withdrawal() -> None:
     else:
         print('No accounts registered.')
     sleep(2)
-    menu()
-
 
 def make_deposit() -> None:
     if len(accounts) > 0:
-        number: int = int(input('Enter your account number: '))
+        number: str = input('Enter your account number: ')
+        while not number.isdigit():
+            print("Invalid account number. Try again.")
+            number = input('Enter your account number: ')
 
-        account: Account = find_account_by_number(number)
+        account: Account = find_account_by_number(int(number))
 
         if account:
             value: float = float(input('Enter the deposit amount: '))
@@ -103,19 +125,23 @@ def make_deposit() -> None:
     else:
         print('No accounts registered.')
     sleep(2)
-    menu()
-
 
 def make_transfer() -> None:
     if len(accounts) > 0:
-        number_origin: int = int(input('Enter your account number: '))
+        number_origin: str = input('Enter your account number: ')
+        while not number_origin.isdigit():
+            print("Invalid account number. Try again.")
+            number_origin = input('Enter your account number: ')
 
-        account_origin: Account = find_account_by_number(number_origin)
+        account_origin: Account = find_account_by_number(int(number_origin))
 
         if account_origin:
-            number_destiny: int = int(input('Enter the destination account number: '))
-            
-            account_destiny: Account = find_account_by_number(number_destiny)
+            number_destiny: str = input('Enter the destination account number: ')
+            while not number_destiny.isdigit():
+                print("Invalid destination account number. Try again.")
+                number_destiny = input('Enter the destination account number: ')
+                
+            account_destiny: Account = find_account_by_number(int(number_destiny))
 
             if account_destiny:
                 value: float = float(input('Enter the transfer amount: '))
@@ -128,8 +154,6 @@ def make_transfer() -> None:
     else:
         print('No accounts registered.')
     sleep(2)
-    menu()
-
 
 def list_accounts() -> None:
     if len(accounts) > 0:
@@ -142,15 +166,12 @@ def list_accounts() -> None:
     else:
         print('No accounts registered.')
     sleep(2)
-    menu()
-
 
 def find_account_by_number(number: int) -> Account:
     for acc in accounts:
         if acc.number == number:
             return acc
     return None
-
 
 if __name__ == '__main__':
     main()
